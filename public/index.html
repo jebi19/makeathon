@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Blue Glowing Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #ffffff;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 320px;
+            padding: 40px;
+            border-radius: 50px;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .container h2 {
+            margin-bottom: 20px;
+            color: #0072ff;
+        }
+
+        .input-box {
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgb(96, 172, 238);
+            border-radius: 15px;
+            font-size: 16px;
+            background: transparent;
+            color: black;
+            outline: none;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Glowing effect when focused */
+        .input-box input:focus {
+            border-color: #00c6ff;
+            box-shadow: 0 0 10px rgba(0, 198, 255, 0.8);
+        }
+
+        /* Hide placeholder when clicked */
+        .input-box input:focus::placeholder {
+            color: transparent;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            background: linear-gradient(45deg, #00c6ff, #0072ff);
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: linear-gradient(45deg, #0072ff, #00c6ff);
+        }
+
+        /* Glowing Neon Blue Rings */
+        .rings {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        .rings span {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 3px solid rgba(0, 162, 255, 0.7);
+            border-radius: 50%;
+            animation: rotateRing 8s linear infinite, irregularMove 3s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 10px rgba(0, 162, 255, 0.7));
+        }
+
+        .rings span:nth-child(1) {
+            border-color: rgba(0, 162, 255, 0.8);
+            transform: scale(1.5, 1.2) rotate(0deg);
+            animation-delay: -2s;
+        }
+
+        .rings span:nth-child(2) {
+            border-color: rgba(0, 120, 255, 0.8);
+            transform: scale(1.2, 1.4) rotate(0deg);
+            animation-delay: -1s;
+        }
+
+        .rings span:nth-child(3) {
+            border-color: rgba(0, 200, 255, 0.8);
+            transform: scale(1.4, 1.1) rotate(0deg);
+            animation-delay: 0s;
+        }
+
+        .rings span:nth-child(4) {
+            border-color: rgba(0, 180, 255, 0.8);
+            transform: scale(1.1, 1.5) rotate(0deg);
+            animation-delay: -3s;
+        }
+
+        @keyframes rotateRing {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes irregularMove {
+            0% {
+                border-radius: 50% 48% 52% 50%;
+            }
+
+            25% {
+                border-radius: 52% 50% 48% 50%;
+            }
+
+            50% {
+                border-radius: 50% 52% 75% 48%;
+            }
+
+            75% {
+                border-radius: 48% 50% 90% 50%;
+            }
+
+            100% {
+                border-radius: 40% 50% 50% 50%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="rings">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="container">
+        <h2>Login</h2>
+        <form action="/login" method="POST">
+            <div class="input-box">
+                <input type="text" name="email" placeholder="Email" required>
+            </div>
+            <div class="input-box">
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn">Sign In</button>
+        </form>        
+    </div>
+
+</body>
+
+</html>
