@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Categories</title>
+    <link rel="icon" type="image/png" href="makeathon/Favicon1x.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+    background-size: cover;
+    color: black;
+}
+
+        /* Header Styling */
+        .header {
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.header img{animation: slideIn 2s ease-in-out forwards, glow 2s alternate;}
+@keyframes slideIn {
+            0% { opacity: 0; transform: translateX(-120px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes glow {
+            from { filter: drop-shadow(2px 4px 6px rgba(255, 255, 255, 0.3)); }
+            to { filter: drop-shadow(4px 8px 12px rgba(255, 255, 255, 0.6)); }
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-icons i {
+            font-size: 28px;
+            cursor: pointer;
+            transition: transform 0.2s, color 0.3s;
+            color: white;
+        }
+
+        .header-icons i:hover {
+            transform: scale(1.2);
+        }
+
+        /* Greeting */
+        .greeting {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 100px;
+    color: #f0f8ff;
+    text-shadow: 0 0 5px rgb(0, 183, 255), 0 0 10px rgb(0, 183, 255);
+    white-space: nowrap;
+    overflow: visible;
+    border-right: 2px solid #f0f8ff;
+    width: auto; /* Allow full name to be displayed */
+    display: inline-block;
+    animation: typing 3s steps(20, end) forwards, blinkCursor 0.6s infinite;
+}
+
+
+/* Stops animation before the username */
+.username {
+    border-right: none;
+    animation: none; /* No animation for the username */
+}
+
+
+/* Blinking cursor effect */
+@keyframes blinkCursor {
+    50% { border-color: transparent; }
+}
+   /* Category Grid */
+        .category-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .category {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+        .category:hover {
+            transform: scale(1.05);
+
+        }
+        .category:hover .category-name {
+    visibility: hidden;
+}
+.category:hover .category-name {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+
+        .category img {
+            width: 150px;
+            height: 150px;
+            z-index: 2;
+            transition: opacity 0.3s;
+        }
+
+        .category video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill; 
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    z-index: 1;
+    border-radius: 10px; 
+        }
+
+
+
+        .category:hover video {
+            opacity: 1;
+        }
+
+        .category:hover img {
+            opacity: 0;
+        }
+
+        .category-name {
+            font-size: 20px;
+            margin-top: 10px;
+            z-index: 2;
+            position: relative;
+            padding: 5px;
+        }
+
+        /* Responsive Grid */
+        @media (min-width: 768px) {
+            .category-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+      /* Bubbles Background */
+      .bubbles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -50px;
+            width: 20px;
+            height: 20px;
+            background: rgba(0, 183, 255, 0.5);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 183, 255, 0.5);
+            animation: rise 8s linear infinite;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="bubbles">
+        <!-- Generate multiple bubbles -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const bubbleContainer = document.querySelector('.bubbles');
+
+                for (let i = 0; i < 30; i++) {
+                    let bubble = document.createElement("div");
+                    bubble.classList.add("bubble");
+                    let size = Math.random() * 30 + 10; // Random bubble size
+                    bubble.style.width = size + "px";
+                    bubble.style.height = size + "px";
+                    bubble.style.left = Math.random() * 100 + "vw"; // Random horizontal position
+                    bubble.style.animationDuration = (Math.random() * 5 + 3) + "s"; // Random speed
+                    bubbleContainer.appendChild(bubble);
+                }
+            });
+        </script>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <img src="makeathon/logo.png" alt="Logo"> <!-- Logo on Left -->
+        <div class="header-icons">
+            <i class="fas fa-clipboard-list" onclick="statusTracking()"></i> <!-- Status Tracking -->
+            <a href="login.html"><i class="fas fa-sign-out-alt" onclick="logout()"></i> </a><!-- Logout -->
+        </div>
+    </div>
+
+    <!-- Greeting -->
+    <div class="greeting">Hello, <span id="username">Mohanapriya K</span>!</div>
+
+    <!-- Categories -->
+    <div class="category-container">
+        <div class="category" onclick="redirectTo('electrical.html')" >
+            <video src="makeathon/power.mp4" muted loop disablePictureInPicture></video>
+            <img src="makeathon/power.png" alt="Electrical">
+            <div class="category-name">Electrical</div>
+        </div>
+        <div class="category" onclick="redirectTo('plumbing.html')" >
+            <video src="makeathon/tap.mp4" muted loop disablePictureInPicture></video>
+            <img src="makeathon/tap.png" alt="Plumbing">
+            <div class="category-name">Plumbing</div>
+        </div>
+        <div class="category" onclick="redirectTo('carpentry.html')" >
+            <video src="makeathon/carpentry.mp4" muted loop disablePictureInPicture></video>
+            <img src="makeathon/carpentry.png" alt="Carpentry">
+            <div class="category-name">Carpentry</div>
+        </div>
+        <div class="category" onclick="redirectTo('infrastructure.html')">
+            <video src="makeathon/school.mp4" muted loop disablePictureInPicture></video>
+            <img src="makeathon/school.png" alt="Infrastructure Issues">
+            <div class="category-name">Infrastructure Issues</div>
+        </div>
+        <div class="category" onclick="redirectTo('transport.html')" >
+            <video src="makeathon/bus.mp4" muted loop disablePictureInPicture></video>
+            <img src="makeathon/bus.png" alt="Transport & Parking">
+            <div class="category-name">Transport & Parking</div>
+        </div>
+        <div class="category" onclick="redirectTo('sanitation.html')">
+            <video src="makeathon/cleaning-service.mp4" muted loop disablePictureInPicture></video>
+            <img src="makeathon/cleaning-service.png" alt="Sanitation & Hygiene">
+            <div class="category-name">Sanitation & Hygiene</div>
+        </div>
+        <div class="category" onclick="redirectTo('food.html')">
+            <video src="makeathon/catering.mp4" muted loop disablePictureInPicture></video>
+            <img src="makeathon/catering.png" alt="Food Quality">
+            <div class="category-name">Food Quality</div>
+        </div>
+        <div class="category" onclick="redirectTo('safety.html')">
+            <video src="makeathon/fire-extinguisher.mp4" muted loop disablePictureInPicture></video>
+            <img src="makeathon/fire-extinguisher.png" alt="Safety & Security">
+            <div class="category-name">Safety & Security</div>
+        </div>
+        <div class="category" onclick="redirectTo('internet.html')">
+            <video src="makeathon/hotspot.mp4" muted loop disablePictureInPicture></video>
+            <img src="makeathon/hotspot.png" alt="Internet & Equipment Issues">
+            <div class="category-name">Internet & Equipment Issues</div>
+        </div>
+        <div class="category" onclick="redirectTo('others.html')">
+            <video src="makeathon/more.mp4" muted loop disablePictureInPicture></video>
+            <img src="makeathon/more.png" alt="Others">
+            <div class="category-name">Others</div>
+        </div>        
+    </div>
+    
+    <script>
+        function redirectTo(page) {
+    window.location.href = page;
+}
+function statusTracking() {
+    alert('Redirecting to Status Tracking page!');
+    window.location.href = 'status.html'; // Change to your status tracking page
+}
+    function applyTypingEffect() {
+        const usernameElement = document.getElementById('username');
+        const greetingElement = document.querySelector('.greeting');
+        const fullText = greetingElement.textContent.trim();
+        greetingElement.style.width = `${fullText.length}ch`;
+        greetingElement.style.animation = typing `${fullText.length * 0.1}s steps(${fullText.length}, end) forwards, blinkCursor 0.6s infinite`;
+        const styleSheet = document.styleSheets[0];
+        styleSheet.insertRule(`
+            @keyframes typing {
+                from { width: 0; }
+                to { width: ${fullText.length}ch; }
+            }
+        `, styleSheet.cssRules.length);
+    }
+    fetch('/user-info')
+        .then(response => response.json())
+        .then(data => {
+            if (data.name) {
+                document.getElementById('username').textContent = data.name;
+                applyTypingEffect();
+            }
+        })
+        .catch(error => console.error('Error fetching user data:', error));
+        function logout() {
+            window.location.href = '/logout'; // Redirect to logout route
+        }
+        document.querySelectorAll('.category').forEach(category => {
+            let video = category.querySelector('video');
+            let img = category.querySelector('img');
+    
+            category.addEventListener('mouseenter', () => {
+                video.style.opacity = '1';  // Make video visible
+                video.play();  // Start playing video
+                img.style.opacity = '0';  // Hide the image
+            });
+    
+            category.addEventListener('mouseleave', () => {
+                video.pause();  // Pause video when hover is removed
+                video.currentTime = 0;  // Reset to the beginning
+                video.style.opacity = '0';  // Hide video
+                img.style.opacity = '1';  // Show the image back
+            });
+        });
+    </script>
+</body>
+</html>

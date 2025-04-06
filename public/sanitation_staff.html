@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanitation Worker Dashboard</title>
+    <link rel="icon" type="image/png" href="makeathon/Favicon1x.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Body with Gradient Background */
+body {
+    background: linear-gradient(135deg, #0f172a, #1e3a8a); /* Dark Blue Gradient */
+    text-align: center;
+    overflow: auto; /* Allow scrolling */
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Header */
+.header {
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    position: relative;
+}
+
+.header img{animation: slideIn 2s ease-in-out forwards, glow 2s alternate;}
+@keyframes slideIn {
+            0% { opacity: 0; transform: translateX(-120px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes glow {
+            from { filter: drop-shadow(2px 4px 6px rgba(255, 255, 255, 0.3)); }
+            to { filter: drop-shadow(4px 8px 12px rgba(255, 255, 255, 0.6)); }
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-icons i {
+            font-size: 28px;
+            cursor: pointer;
+            transition: transform 0.2s, color 0.3s;
+        }
+
+        .header-icons i:hover {
+            transform: scale(1.2);
+        }
+
+/* Dashboard Cards */
+.dashboard {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px auto;
+     position: relative; 
+    z-index: 10;
+}
+
+.card {
+    background: linear-gradient(45deg, #00c8ff69, #0072ff);
+    border: 1px groove cyan;
+    color: whitesmoke;
+    padding: 20px;
+    margin-top: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    animation: fadeInUp 1s ease-in-out;
+    position: relative;
+}
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 183, 255, 0.3);
+}
+
+/* Floating Animation */
+@keyframes floating {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0); }
+}
+
+.card:nth-child(1) { animation: floating 2s ease-in-out infinite; }
+.card:nth-child(2) { animation: floating 2s ease-in-out infinite 1s; }
+.card:nth-child(3) { animation: floating 2s ease-in-out infinite 2s; }
+.card:nth-child(4)  { animation: floating 2s ease-in-out infinite 3s; }
+
+/* Fade-in Slide-up Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.counter {
+    font-size: 2em;
+    font-weight: bold;
+    color: white;
+}
+
+
+.bubbles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -50px;
+            width: 20px;
+            height: 20px;
+            background: rgba(0, 183, 255, 0.5);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 183, 255, 0.5);
+            animation: rise 8s linear infinite;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+        button {
+            padding: 12px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(45deg, #00c6ff, #0072ff); 
+            color: white;
+            font-size: 18px;
+            padding: 5px 10px;
+            cursor: pointer;
+         } 
+         .button:hover {
+            background: linear-gradient(45deg, #0072ff, #00c6ff);
+            box-shadow: 0 0 10px #00c8ffa4 ;
+        }
+         table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 10;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Table header styling */
+th, td {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    text-align: left;
+    transition: background 0.3s ease-in-out;
+}
+
+/* Animated header with a glowing effect */
+th {
+    background: linear-gradient(135deg, #1e3a8a, #0f172a);
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Row hover effect - slightly increases size */
+tr:hover {
+    background: rgba(0, 183, 255, 0.2);
+    transform: scale(1.02);
+    transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
+}
+
+/* Animate table rows appearing */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Smooth hover effect for cells */
+td {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Active row highlighting */
+tr:active {
+    background: rgba(0, 183, 255, 0.4);
+    transition: background 0.3s ease-in-out;
+}
+  /* Modal Styles - Fixed */
+  .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+    margin-top: 0px;
+    padding: 62px;
+    border-radius: 10px;
+    width: 611px;
+    height: 156px;
+    margin: 0 auto;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+        }
+   /* Close Button */
+   .close {
+            position: absolute;
+            right: 15px;
+            top: 5px;
+            font-size: 30px;
+            cursor: pointer;
+            color: black;
+        }
+
+        /* Progress Container */
+        .progress-container {
+            width: 100%;
+            padding: 30px 0;
+        }
+
+        .progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        .progress-background {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background-color: #ccc;
+            border-radius: 3px;
+            transform: translateY(-50%);
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 0%;
+            height: 6px;
+            background-color: #003849;
+            border-radius: 3px;
+            transition: width 1s ease-in-out;
+            transform: translateY(-50%);
+        }
+        .progress-step {
+            position: relative;
+            z-index: 2;
+            width: 30px;
+            height: 30px;
+            background-color: #ccc;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #fff;
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        .progress-step.active {
+            background-color: #000749;
+            transform: scale(1.1);
+        }
+
+        .progress-step::before {
+            content: attr(data-step);
+            position: absolute;
+            top: -25px;
+            font-size: 0.8rem;
+            color: #000749;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .progress-step .checkmark {
+            display: none;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .progress-step.active .checkmark {
+            display: block;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="bubbles">
+        <!-- Generate multiple bubbles -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const bubbleContainer = document.querySelector('.bubbles');
+
+                for (let i = 0; i < 30; i++) {
+                    let bubble = document.createElement("div");
+                    bubble.classList.add("bubble");
+                    let size = Math.random() * 30 + 10; // Random bubble size
+                    bubble.style.width = size + "px";
+                    bubble.style.height = size + "px";
+                    bubble.style.left = Math.random() * 100 + "vw"; // Random horizontal position
+                    bubble.style.animationDuration = (Math.random() * 5 + 3) + "s"; // Random speed
+                    bubbleContainer.appendChild(bubble);
+                }
+            });
+        </script>
+    </div>
+    
+      <!-- Header -->
+      <div class="header">
+        <a href="index.html"><img src="makeathon/InfraGeni.png" alt="Logo"></a> <!-- Logo on Left -->
+        <div class="header-icons">
+            <!-- Clipboard icon to open modal -->
+             <!--<i class="fas fa-clipboard-list" id="trackingBtn"></i>-->
+            <i class="fas fa-sign-out-alt" onclick="logout()"></i> <!-- Logout -->
+        </div>
+    </div>
+  <!-- Modal Box -->
+   <!--<div id="statusModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="progress-container">
+            <div class="progress">
+                <div class="progress-background"></div>
+                <div class="progress-line"></div>
+                
+                <div class="progress-step" data-step="Issue Received">
+                    <span class="checkmark">✔</span>
+                </div>
+                <div class="progress-step" data-step="Work In Progress">
+                    <span class="checkmark">✔</span>
+                </div>
+                <div class="progress-step" data-step="Work Completed">
+                    <span class="checkmark">✔</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+    <div class="dashboard">
+        <div class="card">
+            <h3>Total Works Assigned</h3>
+            <p class="counter" id="totWorks">0</p>
+        </div>
+        <div class="card">
+            <h3>Daily Works Assigned</h3>
+            <p class="counter" id="totalWorks">0</p>
+        </div>
+        <div class="card">
+            <h3>Pending <br> Works</h3>
+            <p class="counter" id="pendingWorks">0</p>
+        </div>
+        <div class="card">
+            <h3>completed</h3>
+            <p class="counter" id="completed">0</p>
+        </div>
+    </div>
+
+
+    <table id="grievanceTable" border="1" cellspacing="0" cellpadding="8" style="width: 80%; margin: 0 auto;">
+        <thead>
+            <tr>
+                <th>Grievance ID</th>
+                <th>Location</th>
+                <th>Issue</th>
+                <th>Severity</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Grievance rows will be dynamically inserted here -->
+        </tbody>
+    </table>
+
+    <script>
+
+    // Fetch grievances and summary
+    async function fetchGrievances() {
+        try {
+            const [grievancesResponse, summaryResponse] = await Promise.all([
+                fetch('/sanitation-grievances'),
+                fetch('/sanitation-summary')
+            ]);
+
+            const grievances = await grievancesResponse.json();
+            const { totalWorks, dailyWorks, pendingWorks, completedWorks } = await summaryResponse.json();
+
+            renderTable(grievances);
+            updateCounters(totalWorks, dailyWorks, pendingWorks, completedWorks);
+
+        } catch (error) {
+            console.error('❌ Error fetching grievances:', error);
+        }
+    }
+
+    const tableBody = document.querySelector('#grievanceTable tbody');
+
+    // Function to update counters
+    function updateCounters(total, daily, pending, completed) {
+        document.getElementById('totWorks').textContent = total;
+        document.getElementById('totalWorks').textContent = daily;
+        document.getElementById('pendingWorks').textContent = pending;
+        document.getElementById('completed').textContent = completed;
+    }
+
+    // Function to render the table
+    function renderTable(grievances) {
+        tableBody.innerHTML = '';
+
+        grievances.forEach(grievance => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${grievance.grievance_id}</td>
+                <td>${grievance.location}</td>
+                <td>${grievance.description}</td>
+                <td>${grievance.severity}</td>
+                <td id="status-${grievance.id}">
+                    ${grievance.status === 'pending' ? 
+                        `<button onclick="markComplete('${grievance.id}')">Pending</button>` : 
+                        'Completed'}
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    // Function to mark a grievance as complete
+    async function markComplete(id) {
+        try {
+            await fetch(`/api/grievances/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: 'completed' })
+            });
+
+            // Update status and refresh counters
+            const statusCell = document.querySelector(`#status-${id}`);
+            statusCell.innerHTML = 'Completed';
+
+            // Refresh the summary
+            fetchGrievances();
+        } catch (error) {
+            console.error('❌ Error updating status:', error);
+        }
+    }
+    function logout() {
+        window.location.href = 'login.html';
+    }
+
+    // Modal handling
+    /*function setupModal() {
+        const modal = document.getElementById("statusModal");
+        const btn = document.getElementById("trackingBtn");
+        const closeBtn = document.querySelector(".close");
+        const steps = document.querySelectorAll(".progress-step");
+        const line = document.querySelector(".progress-line");
+        let currentStep = 0;
+        let progressInterval;
+        
+        // Button to open modal
+        btn.onclick = function() {
+            modal.style.display = "flex";
+            resetProgress();
+            startProgress();
+        }
+        
+        // Close button
+        closeBtn.onclick = function() {
+            closeModal();
+        }
+        
+        // Click outside to close
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+        
+        function updateProgress() {
+            steps.forEach((step, index) => {
+                if (index <= currentStep) {
+                    step.classList.add("active");
+                } else {
+                    step.classList.remove("active");
+                }
+            });
+
+            // Update progress line width
+            const progressPercent = (currentStep / (steps.length - 1)) * 100;
+            line.style.width = `${progressPercent}%`;
+        }
+        
+        function nextStep() {
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                updateProgress();
+            } else {
+                clearInterval(progressInterval);
+            }
+        }
+        
+        function startProgress() {
+            progressInterval = setInterval(nextStep, 2000);
+        }
+        
+        function resetProgress() {
+            clearInterval(progressInterval);
+            currentStep = 0;
+            updateProgress();
+        }
+        
+        function closeModal() {
+            modal.style.display = "none";
+            resetProgress();
+        }
+        
+        // Make closeModal function available globally
+        window.closeModal = closeModal;
+    }*/
+
+    // Initial data load
+    fetchGrievances();
+    
+    // Call setupModal function when the DOM is fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        setupModal();
+    });
+
+    </script>   
+</body>    
+</html>
